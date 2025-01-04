@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
@@ -146,6 +146,16 @@
     .form-grid .full-width {
       grid-column: span 2;
     }
+
+    #success-message {
+      display: none;
+      text-align: center;
+      background-color: #e4f0cd;
+      color: green;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
   </style>
 
   <script>
@@ -167,6 +177,17 @@
       }
       return true;
     }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      if (validateForm()) {
+        var successMessage = document.getElementById('success-message');
+        successMessage.style.display = 'block';
+        setTimeout(() => {
+          event.target.submit();
+        }, 2000); // Form submission after showing success message for 2 seconds
+      }
+    }
   </script>
 </head>
 <body>
@@ -175,8 +196,9 @@
       <img src="https://github.com/Niwinini/demande-de-devis/raw/main/trucks-landing-our-range.png" alt="Image de camion">
     </div>
     <div class="form-container">
-      <form action="https://formspree.io/f/mannpzoq" method="POST" onsubmit="return validateForm()">
+      <form action="https://formspree.io/f/mannpzoq" method="POST" onsubmit="handleSubmit(event)">
         <h1>Demander un devis</h1>
+        <div id="success-message">Votre demande a été envoyée avec succès !</div>
         <div class="form-grid">
           <div>
             <label for="nom">Nom :</label>
@@ -208,7 +230,7 @@
           </div>
           <div id="sirene-field">
             <label for="sirene">Numéro Sirene :</label>
-            <input type="text" id="sirene" name="sirene" placeholder="Numéro Sirene (9 chiffres)" pattern="^\d{9}$" maxlength="9" required>
+            <input type="text" id="sirene" name="sirene" placeholder="Numéro Sirene (9 chiffres)" pattern="^\d{9}$" maxlength="9">
           </div>
           <div class="full-width">
             <label for="message">Message :</label>
